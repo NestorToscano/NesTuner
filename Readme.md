@@ -25,21 +25,23 @@
         </ul>
       <li>Amplifcation</li>
         <ul>
-          <li>I then created a typical noninverting amplifier circuit with a biased input and reference voltage of 1.65V using the MCP6002 Low-Power Op Amp. I calculated the gain using basic circuit analysis to find the formula (Gain = 1 + R1/R2). Based on my input voltage I decided a 90-110x amplifcation would be necessary for proper post-signal analysis, so I chose resistance values of 1k and 100k. </li>
+          <li>I then created a typical noninverting amplifier circuit with a biased input and reference voltage of 1.65V using the MCP6002 Low-Power Op Amp. I calculated the gain using basic circuit analysis to find the formula (Gain = 1 + R1/R2). Based on my input voltage I decided a 90-110x amplifcation or about 40dB would be necessary for proper post-signal analysis, so I chose resistance values of 1k and 100k. </li>
         </ul>
       <li>Filtering</li>
         <ul>
           <li>In order to reduce noise I then passed the amplified signal through a simple RC low pass filter. If I were to sample at a rate of 8kHz this means the Nyquist frequency would be 8khz/2 or 4kHz, so I chose a cutoff frequency slightly below this to prevent any aliasing at about 3.5kHz. Through circuit analysis, a single-pole RC LPF cutoff frequency can be calculated using the formula f=1/(2*pi*R*C), so I chose a 4.7nF capacitor and a 10k resistor for an approximate 3.4kHz cutoff.  </li>
           <li>Similarily, I created a high pass filter reversing the resistor and capacitor order targeting a cutoff frequency of 100Hz which led to values of .1muF for the capactior and 15k for the resistor. </li>
         </ul>
+      <li>Voltage Divider</li>
+        <ul>
+          <li>In order for the op amp to handle signals below 0V, I had to create a mid-rail bias of 1.65V by shifting the signal up. This was accomplished simply using a voltage divider connected to two capacitors to create a stable bias which would be unaffected by the AC signal. I simply chose values which would best fit my needs in this case which were 10mu and 100n farads. </li>
+        </ul>
     </ul>
-  <li>Breadboard Prototyping</li> 
+  <li>Breadboard Prototyping/Software</li> 
     <ul>
-      <li> ....</li>
-    </ul>
-  <li>Software</li>
-    <ul>
-      <li>......</li>
+      <li> After verifying each stage of my circuit through simulation, I started building the actual hardware. First, I had to verify the I2C display would function correctly according to my needs, so I created a circuit solely to debug the display using the raspberry pi pico's I2C1 (SDA and SCL) pins. I then created the project's core layout using a standard Cmake skeleton, making sure to include the libraries for the i2c display from the pico SDK. From here, I created my own low-levl drivers for the display as well as several API function's which would be of use for UI purposes.</li>
+      <li> I then wired each component according to my final SPICE design with the oled display connected as well. I made sure to debug each stage as well using a oscilloscope and multimeter to account for any differences from the ideal design. Once I verified each stage fully, I connected the output of the circuit to the ADC pin of the Pico to gather raw data and debug. At this point, a lot of debugging was necessary, so I had to use the serial monitor from my computer to verify the raw ADC values as well as fine tune my resistor and capacitor values.</li>
+      <li>With the raw ADC values, I had to create an algorithm which would convert this raw data into ..(sampling rate 8khz or 125mus | signal processing).. I then finally used the API I had created for the display to create a UI which would display the musical note, tuning error, and tuning direction.</li>
     </ul>
 </ol>
 
