@@ -61,7 +61,7 @@
         <td><a href="https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/CMC-5042PF-AC/1869984">Digikey</a></td>
     </tr>
     <tr>
-      <td>Resistors</td>
+      <td>Resistors (0.25 W)</td>
         <td> Variety </td>
         <td><a>Amazon/Digikey/etc</a></td>
     </tr>

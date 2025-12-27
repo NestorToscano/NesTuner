@@ -45,7 +45,7 @@ int main(void) {
   while (true) {
     uint16_t raw = adc_read();
 
-    // slow DC tracking
+    
     baseline += (raw - baseline) >> 7;
 
     int32_t signal = raw - baseline;

@@ -155,7 +155,7 @@ void oled_draw_string(int x, int y, const char *s)
   while (*s)
   {
     oled_draw_char(cursor_x, y, *s);
-    cursor_x += FONT5X7_WIDTH + 1; // 1-pixel spacing
+    cursor_x += FONT5X7_WIDTH + 1; // 1 pixel spacing
     s++;
   }
 }
