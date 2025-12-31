@@ -7,7 +7,7 @@
 
 <h2>Features</h2>
 <ul>
-  <li>Real-time pitch mapping/tracking (50 Hz - 1000 Hz) </li>
+  <li>Real-time pitch mapping/tracking (80 Hz - 35000 Hz) </li>
   <li>Tuning error in cents (+- 100)</li>
   <li>Tuning direction indicators (< | >) </li>
   <li>Auto calibation DC offset removal from the mic's input</li>
@@ -20,7 +20,7 @@
     <ul>
       <li>Electret Microphone</li>
         <ul>
-          <li>First, I modeled the application circuit in the CMC-5042PF-AC as closely as possible, however, I had to use an AC test source (SINE(0 1m 440)) since SPICE can't directly simulate the microphone. I used an as accurate as possible AC signal to what the microphone would output before amplification with a 1mV amplitude signal and a constant 440 Hz frequency. </li>
+          <li>First, I modeled the application circuit in the CMC-5042PF-AC as closely as possible, however, I had to use an AC test source (SINE(0 1m 440)) since SPICE can't directly simulate the microphone. I used an as accurate as possible AC signal to what the microphone would output before amplification with a 1mV amplitude signal and a constant 440 Hz frequency which is recognized as the standard pitch for tuning musical instruments. </li>
           <li>Both the bias resistor (2.2k) for a 3.3V voltage source and the coupling capacitor (1mu) were included in the design. The bias resistor powers the internal JFET of the electret microphone and sets the correct operating current, creating a DC-biased output that carries the AC audio signal. This AC signal then requires a coupling capacitor in order to block the DC component before signal amplifcation. </li>
         </ul>
       <li>Amplifcation</li>
@@ -30,7 +30,7 @@
       <li>Filtering</li>
         <ul>
           <li>In order to reduce noise I then passed the amplified signal through a simple RC low pass filter. If I were to sample at a rate of 8kHz this means the Nyquist frequency would be 8khz/2 or 4kHz, so I chose a cutoff frequency slightly below this to prevent any aliasing at about 3.5kHz. Through circuit analysis, a single-pole RC LPF cutoff frequency can be calculated using the formula f=1/(2*pi*R*C), so I chose a 4.7nF capacitor and a 10k resistor for an approximate 3.4kHz cutoff.  </li>
-          <li>Similarily, I created a high pass filter reversing the resistor and capacitor order targeting a cutoff frequency of 100Hz which led to values of .1muF for the capactior and 15k for the resistor. </li>
+          <li>Similarily, I created a high pass filter reversing the resistor and capacitor order targeting a cutoff frequency of 80hZ which led to values of 20nF for the capactior and 100k for the resistor which was also biased at 1.65V. I did notice that using two cascaded filters resulted in my amplifcation being reduced to about 10x or 19dB, however, not filtering out these frequencies created large noise in the adc values from the internals of the circuit. </li>
         </ul>
       <li>Voltage Divider</li>
         <ul>
@@ -99,9 +99,4 @@
 </table>
 
 <h2>Future Improvements</h2>
-<ul>
-  <li>Noise Handling / Gain Control </li>
-  <li>Pitch Accuracy</li>
-  <li>UI Improvement</li>
-  <li>PCB + Enclosure</li>
-</ul>
+<p>In the future, I hope to improve noise performance and gain control, as the current design occasionally amplifies background hiss and reduces signal clarity. Pitch accuracy also requires refinement, and slight deviations are present when input levels fluctuate or harmonics interfere with detection. In addition, the user interface can be improved upon for clearer/more user friendly and faster feedback from the display. Finally, migrating to a custom PCB and enclosure will be able to reduce wire noise which will likely make the finaly producut much more accurate.
