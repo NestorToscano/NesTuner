@@ -39,15 +39,15 @@
     </ul>
 
   <p> The final simulated circuit can be seen below. According to the magnitude response in my SPICE results, I should have a final output which is in the 19dB range as expected from my filtering. The band of passed frequencies did match what I intended as well resulting in frequencies between 80 Hz and 35 kHz. </p>
-  <img src="assets/SPICE.png">
+  <img src="assets/SPICE.png" width="600">
   <li>Breadboard Prototyping/Software</li> 
     <ul>
       <li> After verifying each stage of my circuit through simulation, I started building the actual hardware. First, I had to verify the I2C display would function correctly according to my needs, so I created a circuit solely to debug the display using the raspberry pi pico's I2C1 (SDA and SCL) pins. I then created the project's core layout using a standard Cmake skeleton, making sure to include the libraries for the i2c display from the pico SDK. From here, I created my own low-levl drivers for the display as well as several API function's which would be of use for UI purposes.</li>
       <li> I then wired each component according to my final SPICE design with the oled display connected as well. I made sure to debug each stage as well using a oscilloscope and multimeter to account for any differences from the ideal design. Once I verified each stage fully, I connected the output of the circuit to the ADC pin of the Pico to gather raw data and debug. At this point, a lot of debugging was necessary, so I had to use the serial monitor from my computer to verify the raw ADC values as well as fine tune my resistor and capacitor values.</li>
-      <li>With the raw ADC values, I had to create an algorithm which would convert this raw data into ..(sampling rate 8khz or 125mus | signal processing).. I then finally used the API I had created for the display to create a UI which would display the musical note, tuning error, and tuning direction.</li>
+      <li>With the raw ADC values, I had to create an algorithm capable of translating this data into a real-time frequency estimate. Using an 8 kHz sampling rate or 125 μs per sample, I implemented a zero-crossing based estimator to derive the fundamental frequency of the signal. After establishing a reasonable pitch estimate, I mapped the frequency to the closest musical note using the standard A4 or 440 Hz reference and the equal temperament tuning formula. Finally, I integrated everything together with my display API and created the UI which displays the detected note, tuning error (±100 cents), and tuning direction indicator in real time based on my data.</li>
     </ul>
      <p> The final simulated circuit can be seen below. According to the magnitude response in my SPICE results, I should have a final output which is in the 19dB range as expected from my filtering. The band of passed frequencies did match what I intended as well resulting in frequencies between 80 Hz and 35 kHz. </p>
-  <img src="assets/IMG_9351.PNG"  width="300">
+  <img src="assets/IMG_9351.PNG"  width="600">
     
 </ol>
 
