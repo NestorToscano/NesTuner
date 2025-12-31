@@ -19,7 +19,7 @@ add_executable(lcd_display
     src/tuner.c
 )
 
-# Include directory for headers
+# Include directory for header
 target_include_directories(lcd_display PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src
 )
