@@ -1,7 +1,7 @@
 <h1>NesTuner</h1>
 <p>Fully designed and prototyped sound tuner built using the Raspberry Pi Pi, an electret microphone, and an I2C oled display. The system performs analog signal conditioning, pitch detection, and real-time note estimation using C without external DSP libraries.</p>
 <h2>Overview</h2> 
-<p>This project captures audio from a microphone, filters a range of frequencies and amplifies the signal using a custom analog hardware design, and feeds it into the Pico's ADC. Using logarithmic frequency mapping and zero-crossing pitch detection, the algorithm I designed determines the nearest musical note and its cents, and it displays the tuning direction all on the OLED display.</p>
+<p>This project captures audio from a microphone, filters a range of frequencies and amplifies the signal using a custom analog hardware design, and feeds it into the Pico's ADC. Using logarithmic frequency mapping and zero-crossing pitch detection, the algorithm I designed determines the nearest musical note and the cents from its frequency, and it displays the tuning direction all on the OLED display using custom drivers.</p>
 
 <p>This project was designed entirely from scratch using LTSpice analog circuit simulation/development, breadboard prototyping, and C to develop low-level I2C drivers for the oled display.</p>
 
@@ -37,12 +37,18 @@
           <li>In order for the op amp to handle signals below 0V, I had to create a mid-rail bias of 1.65V by shifting the signal up. This was accomplished simply using a voltage divider connected to two capacitors to create a stable bias which would be unaffected by the AC signal. I simply chose values which would best fit my needs in this case which were 10mu and 100n farads. </li>
         </ul>
     </ul>
+
+  <p> The final simulated circuit can be seen below. According to the magnitude response in my SPICE results, I should have a final output which is in the 19dB range as expected from my filtering. The band of passed frequencies did match what I intended as well resulting in frequencies between 80 Hz and 35 kHz. </p>
+  <img src="assets/SPICE.png">
   <li>Breadboard Prototyping/Software</li> 
     <ul>
       <li> After verifying each stage of my circuit through simulation, I started building the actual hardware. First, I had to verify the I2C display would function correctly according to my needs, so I created a circuit solely to debug the display using the raspberry pi pico's I2C1 (SDA and SCL) pins. I then created the project's core layout using a standard Cmake skeleton, making sure to include the libraries for the i2c display from the pico SDK. From here, I created my own low-levl drivers for the display as well as several API function's which would be of use for UI purposes.</li>
       <li> I then wired each component according to my final SPICE design with the oled display connected as well. I made sure to debug each stage as well using a oscilloscope and multimeter to account for any differences from the ideal design. Once I verified each stage fully, I connected the output of the circuit to the ADC pin of the Pico to gather raw data and debug. At this point, a lot of debugging was necessary, so I had to use the serial monitor from my computer to verify the raw ADC values as well as fine tune my resistor and capacitor values.</li>
       <li>With the raw ADC values, I had to create an algorithm which would convert this raw data into ..(sampling rate 8khz or 125mus | signal processing).. I then finally used the API I had created for the display to create a UI which would display the musical note, tuning error, and tuning direction.</li>
     </ul>
+     <p> The final simulated circuit can be seen below. According to the magnitude response in my SPICE results, I should have a final output which is in the 19dB range as expected from my filtering. The band of passed frequencies did match what I intended as well resulting in frequencies between 80 Hz and 35 kHz. </p>
+  <img src="assets/IMG_9351.PNG"  width="300">
+    
 </ol>
 
 <h2>Bill of Materials</h2>
