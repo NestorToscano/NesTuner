@@ -25,16 +25,16 @@
         </ul>
       <li>Amplifcation</li>
         <ul>
-          <li>I then created a typical noninverting amplifier circuit with a biased input and reference voltage of 1.65V using the MCP6002 Low-Power Op Amp. I calculated the gain using basic circuit analysis to find the formula (Gain = 1 + R1/R2). Based on my input voltage I decided a 90-110x amplifcation or about 40dB would be necessary for proper post-signal analysis, so I chose resistance values of 1k and 100k. </li>
+          <li>I then created a typical noninverting amplifier circuit with a biased input and reference voltage of 1.65V using the MCP6002 Low-Power Op Amp. I calculated the gain using basic circuit analysis to find the formula (Gain = 1 + R1/R2). Based on my input voltage I decided a 90-110x amplifcation or about 40dB would be necessary due to the sensitivity of the ADC for the Pico, so I chose resistance values of 1k and 100k. </li>
         </ul>
       <li>Filtering</li>
         <ul>
           <li>In order to reduce noise I then passed the amplified signal through a simple RC low pass filter. If I were to sample at a rate of 8kHz this means the Nyquist frequency would be 8khz/2 or 4kHz, so I chose a cutoff frequency slightly below this to prevent any aliasing at about 3.5kHz. Through circuit analysis, a single-pole RC LPF cutoff frequency can be calculated using the formula f=1/(2*pi*R*C), so I chose a 4.7nF capacitor and a 10k resistor for an approximate 3.4kHz cutoff.  </li>
-          <li>Similarily, I created a high pass filter reversing the resistor and capacitor order targeting a cutoff frequency of 80hZ which led to values of 20nF for the capactior and 100k for the resistor which was also biased at 1.65V. I did notice that using two cascaded filters resulted in my amplifcation being reduced to about 10x or 19dB, however, not filtering out these frequencies created large noise in the adc values from the internals of the circuit. </li>
+          <li>Similarily, I created a high pass filter reversing the resistor and capacitor order targeting a cutoff frequency of 80hZ which led to values of 20nF for the capactior and 100k for the resistor which was also biased at 1.65V since the Pico ADC is unable to read negative voltages. I did notice that using two cascaded filters resulted in my amplifcation being reduced to about 10x or 19dB, however, not filtering out these frequencies created unintended noise in the adc values from the internals of the circuit for various frequencies. </li>
         </ul>
       <li>Voltage Divider</li>
         <ul>
-          <li>In order for the op amp to handle signals below 0V, I had to create a mid-rail bias of 1.65V by shifting the signal up. This was accomplished simply using a voltage divider connected to two capacitors to create a stable bias which would be unaffected by the AC signal. I simply chose values which would best fit my needs in this case which were 10mu and 100n farads. </li>
+          <li>In order for the op amp as well as the ADC from the pico, as discussed before, to handle signals below 0V, I had to create a mid-rail bias of 1.65V by shifting the signal up. This was accomplished simply using a voltage divider connected to two capacitors to create a stable bias which would be unaffected by the AC signal. I simply chose values which would best fit my needs in this case which were 10mu and 100n farads. </li>
         </ul>
     </ul>
 
