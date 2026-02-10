@@ -1,5 +1,5 @@
 <h1>NesTuner</h1>
-<p>Fully designed and prototyped sound tuner built using the Raspberry Pi Pi, an electret microphone, and an I2C oled display. The system performs analog signal conditioning, pitch detection, and real-time note estimation using C without external DSP libraries.</p>
+<p>Fully designed and prototyped sound tuner built using the Raspberry Pi, an electret microphone, and an I2C oled display. The system performs analog signal conditioning, pitch detection, and real-time note estimation using C without external DSP libraries.</p>
 <h2>Overview</h2> 
 <p>This project captures audio from a microphone, filters a range of frequencies and amplifies the signal using a custom analog hardware design, and feeds it into the Pico's ADC. Using logarithmic frequency mapping and zero-crossing pitch detection, the algorithm I designed determines the nearest musical note and the cents from its frequency, and it displays the tuning direction all on the OLED display using custom drivers.</p>
 
